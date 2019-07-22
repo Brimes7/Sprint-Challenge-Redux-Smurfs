@@ -1,18 +1,11 @@
-/*
-  Be sure to import in all of the action types from `../actions`
-*/
+import { FETCH, FETCH_SUCCESS, FETCH_FAILURE, ADD, DELETE } from '../actions';
 
-/*
- Your initial/default state for this project could *Although does not have to* look a lot like this
- {
-   smurfs: [],
-   fetchingSmurfs: false
-   addingSmurf: false
-   updatingSmurf: false
-   deletingSmurf: false
-   error: null
- }
-*/
+const initialState = {
+  smurfs: [],
+  fetchingSmurfs: false,
+  error: ''
+};
+
 
 /*
   You'll only need one smurf reducer for this project.
@@ -21,3 +14,49 @@
   There is no need for 'combineReducers' in this project.
   Components can then read your store as, `state` and not `state.fooReducer`.
 */
+
+//implements the payload using a switch statement
+
+const reducer = (state = initialState, action) => {
+  switch (action.type) {
+    case FETCH:
+      return {
+        ...state,
+        fetchingSmurfs: true,
+        error: ''
+      };
+    case FETCH_SUCCESS:
+      return {
+        ...state,
+        smurfs: action.payload,
+        fetchingSmurfs: false,
+        error: ''
+      };
+    case FETCH_FAILURE:
+      return {
+        ...state,
+        error: action.payload,
+        isLoading: false
+      };
+
+    //Adding Smurfs  
+    case ADD:
+      return {
+        ...state,
+        smurfs: action.payload,
+        error: ''
+      };
+
+    //Deleting Smurfs
+    case DELETE:
+      return {
+        ...state,
+        smurfs: action.payload,
+        error: ''
+      };
+    default:
+      return state;
+  }
+}
+
+export default reducer;
